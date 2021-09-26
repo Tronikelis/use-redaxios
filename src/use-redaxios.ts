@@ -16,7 +16,7 @@ export function useRedaxios<Body>(
     const { options: defaults } = useContext(FetchContext);
 
     // data, loading, error state
-    const [data, setData] = useState<Body | null>(null);
+    const [data, setData] = useState<Body>({} as Body);
     const [loading, setLoading] = useState(!!deps);
     const [error, setError] = useState<Response<any> | null>(null);
 

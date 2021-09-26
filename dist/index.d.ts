@@ -23,7 +23,7 @@ interface useRedaxiosFnReturns<T> {
     patch: BodyMethod;
 
     loading: boolean;
-    data: T | null;
+    data: T | undefined;
     error: Response<any>;
 }
 

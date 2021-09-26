@@ -4,7 +4,12 @@ import { useRedaxios } from "use-redaxios";
 export default function Test() {
     const [count, setCount] = useState(1);
 
-    const { data, loading, error, get } = useRedaxios<object>(
+    const {
+        data = {},
+        loading,
+        error,
+        get,
+    } = useRedaxios<object>(
         "https://jsonplaceholder.typicode.com/posts/" + count,
         { onSuccess: () => console.log("success") },
         [count]
@@ -12,10 +17,14 @@ export default function Test() {
 
     return (
         <div>
-            <button onClick={() => {
-                setCount(x => x + 1);
-                get(count.toString());
-            }}>inc</button>
+            <button
+                onClick={() => {
+                    setCount(x => x + 1);
+                    get(count.toString());
+                }}
+            >
+                inc
+            </button>
             <br />
             <button onClick={() => get("e")}>get</button>
             <br />
