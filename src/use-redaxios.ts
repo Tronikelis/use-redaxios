@@ -52,16 +52,16 @@ export function useRedaxios<Body>(
         );
         // if error fire the onError callback
         if (error) {
-            setLoading(false);
             setError(data);
             onError(data);
+            setLoading(false);
             return;
         }
 
-        setLoading(false);
         setData(data.data);
         setError(null);
         onSuccess(data.data);
+        setLoading(false);
         return data.data;
     };
 
