@@ -14,7 +14,6 @@
   <pre>npm i use-redaxios</pre>
 </div>
 
-
 <br/>
 
 ## Features
@@ -69,3 +68,43 @@ const fire = () => {
 
 return <div>data: {JSON.stringify(data)}</div>;
 ```
+
+<br />
+
+# Advanced usage examples
+
+## POST'ing body with dependencies
+
+-   Same as GET, but just with a body (sometimes useful)
+
+```tsx
+import { useRedaxios } from "use-redaxios";
+
+// changing data
+const body = {
+    foo: "bar",
+};
+
+const {
+    data = {},
+    loading,
+    error,
+    get,
+} = useRedaxios<object>(
+    "https://jsonplaceholder.typicode.com/posts/" + count,
+    {
+        onSuccess: () => console.log("success"),
+        axios: {
+            method: "post",
+            data: body,
+        },
+    },
+    [count]
+);
+```
+
+<br />
+
+# Documentation
+
+soon
