@@ -1,17 +1,43 @@
-/**
- * Default CSS definition for typescript,
- * will be overridden with file-specific definitions by rollup
- */
-declare module '*.css' {
-  const content: { [className: string]: string };
-  export default content;
+import { Options, Response } from 'redaxios'
+import { ReactNode } from 'react'
+
+export interface useRedaxiosOptions<Body> {
+  interceptors?: {
+    request?: (request: Options) => Promise<Options>
+  }
+  onSuccess?: (res: Body) => void
+  onError?: (error: Response<any>) => void
+  axios?: Options
 }
 
-interface SvgrComponent extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
+type BodyMethod = <Data>(url: string, data: any) => Promise<Data>
+type BodylessMethod<T> = (url?: string) => Promise<T>
 
-declare module '*.svg' {
-  const svgUrl: string;
-  const svgComponent: SvgrComponent;
-  export default svgUrl;
-  export { svgComponent as ReactComponent }
+export interface useRedaxiosFnReturns<T> {
+  get: BodylessMethod<T>
+  del: BodylessMethod<T>
+
+  post: BodyMethod
+  put: BodyMethod
+  patch: BodyMethod
+
+  loading: boolean
+  data: T | null
+  error: Response<any>
 }
+
+export type RequestTypes = 'post' | 'get' | 'delete' | 'put' | 'patch'
+
+export function useRedaxios<T>(
+  url: string,
+  options: useRedaxiosOptions<T> = {},
+  deps?: any[]
+): useRedaxiosFnReturns<T>
+
+export function FetchProvider({
+  options,
+  children
+}: {
+  options: useRedaxiosOptions<unknown>
+  children: ReactNode
+}): JSX.Element

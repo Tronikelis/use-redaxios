@@ -1,7 +1,17 @@
-import './index.css'
+import React from "react";
+import ReactDOM from "react-dom";
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-import App from './App'
+import Test from "./test";
+import { FetchProvider } from "use-redaxios-hook";
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(
+    <FetchProvider
+        options={{
+            onSuccess: () => console.log("yes"),
+            onError: () => console.log("error"),
+        }}
+    >
+        <Test />
+    </FetchProvider>,
+    document.getElementById("root")
+);
