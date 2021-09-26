@@ -46,7 +46,7 @@ export function useRedaxios<Body>(
             axios<Body>({
                 url: url + relativeUrl,
                 method: type,
-                body: body as any,
+                data: body as any,
                 ...mergedOpts.axios,
             })
         );
