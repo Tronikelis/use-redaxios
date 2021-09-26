@@ -73,6 +73,8 @@ return <div>data: {JSON.stringify(data)}</div>;
 
 # Advanced usage examples
 
+<br />
+
 ## POST'ing body with dependencies
 
 -   Same as GET, but just with a body (sometimes useful)
