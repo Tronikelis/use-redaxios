@@ -16,7 +16,7 @@ export default [
         plugins: [
             typescript({
                 target: "ES5",
-                jsx: "react",
+                jsx: "react-jsx",
             }),
             externals({
                 packagePath: "./package.json",
