@@ -5,14 +5,10 @@ export default function Test() {
     const [count, setCount] = useState(1);
 
     const { data, loading, error, get } = useRedaxios<object>(
-        "https://jsonplaceholder.typicode.com/posts/",
+        "https://jsonplaceholder.typicode.com/posts/" + count,
         { onSuccess: () => console.log("success") },
+        [count]
     );
-
-    // will only request when this callback has been called
-    const fire = () => {
-        get("relative path")
-    }
 
     return (
         <div>
