@@ -37,8 +37,8 @@ export function useRedaxios<Body>(
         setLoading(true);
 
         // execute interceptors
-        mergedOpts.axios = options.interceptors?.request
-            ? await options.interceptors.request(mergedOpts.axios ?? {})
+        mergedOpts.axios = mergedOpts.interceptors?.request
+            ? await mergedOpts.interceptors.request(mergedOpts.axios ?? {})
             : mergedOpts.axios;
 
         // fire the request with proper error handling
