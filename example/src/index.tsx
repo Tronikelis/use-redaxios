@@ -2,10 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import Test from "./test";
-import { FetchProvider } from "use-redaxios";
+import { RedaxiosProvider } from "use-redaxios";
 
 ReactDOM.render(
-    <FetchProvider
+    <RedaxiosProvider
         options={{
             interceptors: {
                 request: async request => {
@@ -21,6 +21,6 @@ ReactDOM.render(
         }}
     >
         <Test />
-    </FetchProvider>,
+    </RedaxiosProvider>,
     document.getElementById("root")
 );

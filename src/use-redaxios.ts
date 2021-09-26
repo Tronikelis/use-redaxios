@@ -5,7 +5,7 @@ import { dequal as isEqual } from "dequal";
 import { useCustomCompareEffect as useDeepEffect } from "use-custom-compare";
 
 import { useRedaxiosOptions, useRedaxiosFnReturns, RequestTypes } from "./typings";
-import { FetchContext } from "./provider";
+import { RedaxiosContext } from "./provider";
 
 export function useRedaxios<Body>(
     url: string,
@@ -13,7 +13,7 @@ export function useRedaxios<Body>(
     deps?: any[]
 ) {
     // default options
-    const { options: defaults } = useContext(FetchContext);
+    const { options: defaults } = useContext(RedaxiosContext);
 
     // data, loading, error state
     const [data, setData] = useState<Body>({} as Body);

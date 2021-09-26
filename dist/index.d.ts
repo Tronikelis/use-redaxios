@@ -29,14 +29,13 @@ interface useRedaxiosFnReturns<T> {
 
 type RequestTypes = "post" | "get" | "delete" | "put" | "patch";
 
-
 declare function useRedaxios<T>(
     url: string,
     options?: useRedaxiosOptions<T>,
     deps?: any[]
 ): useRedaxiosFnReturns<T>;
 
-declare function FetchProvider({
+declare function RedaxiosProvider({
     options,
     children,
 }: {
@@ -44,4 +43,4 @@ declare function FetchProvider({
     children: ReactNode;
 }): JSX.Element;
 
-export { FetchProvider, RequestTypes, useRedaxios, useRedaxiosFnReturns, useRedaxiosOptions };
+export { RedaxiosProvider, RequestTypes, useRedaxios, useRedaxiosFnReturns, useRedaxiosOptions };

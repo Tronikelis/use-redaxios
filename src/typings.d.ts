@@ -30,14 +30,13 @@ export interface useRedaxiosFnReturns<T> {
 
 export type RequestTypes = "post" | "get" | "delete" | "put" | "patch";
 
-
 export function useRedaxios<T>(
     url: string,
     options?: useRedaxiosOptions<T>,
     deps?: any[]
 ): useRedaxiosFnReturns<T>;
 
-export function FetchProvider({
+export function RedaxiosProvider({
     options,
     children,
 }: {

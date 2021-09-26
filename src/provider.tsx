@@ -6,16 +6,16 @@ const defaults = {
     axios: axios.defaults,
 } as useRedaxiosOptions<unknown>;
 
-export const FetchContext = createContext({
+export const RedaxiosContext = createContext({
     options: defaults,
 });
 
-export function FetchProvider({
+export function RedaxiosProvider({
     options,
     children,
 }: {
     options: useRedaxiosOptions<unknown>;
     children: ReactNode;
 }) {
-    return <FetchContext.Provider value={{ options }}>{children}</FetchContext.Provider>;
+    return <RedaxiosContext.Provider value={{ options }}>{children}</RedaxiosContext.Provider>;
 }
