@@ -2,9 +2,7 @@ import { useContext, useState } from "react";
 import axios, { Response } from "redaxios";
 import { merge } from "merge-anything";
 import { dequal as isEqual } from "dequal";
-import {
-    useCustomCompareEffect as useDeepEffect, useCustomCompareCallback as useDeepCallback
-} from "use-custom-compare";
+import { useCustomCompareEffect as useDeepEffect } from "use-custom-compare";
 
 import { useRedaxiosOptions, useRedaxiosFnReturns, RequestTypes } from "./typings";
 import { FetchContext } from "./provider";
@@ -23,54 +21,49 @@ export function useRedaxios<Body>(
     const [error, setError] = useState<Response<any> | null>(null);
 
     // main request firing callback
-    const axiosRequest = useDeepCallback(
-        async <T>(type: RequestTypes, relativeUrl: string, body?: T) => {
+    const axiosRequest = async <T>(type: RequestTypes, relativeUrl: string, body?: T) => {
+        // merge the default options with the currently passed ones
+        const mergedOpts = merge(defaults, options);
 
-            // merge the default options with the currently passed ones
-            const mergedOpts = merge(defaults, options);
+        // helper methods
+        const onSuccess = (res: Body) => {
+            mergedOpts.onSuccess && mergedOpts.onSuccess(res);
+        };
+        const onError = (res: Response<any>) => {
+            mergedOpts.onError && mergedOpts.onError(res);
+        };
 
-            // helper methods
-            const onSuccess = (res: Body) => {
-                mergedOpts.onSuccess && mergedOpts.onSuccess(res);
-            };
-            const onError = (res: Response<any>) => {
-                mergedOpts.onError && mergedOpts.onError(res);
-            };
+        // start loading
+        setLoading(true);
 
-            // start loading
-            setLoading(true);
+        // execute interceptors
+        mergedOpts.axios = options.interceptors?.request
+            ? await options.interceptors.request(mergedOpts.axios ?? {})
+            : mergedOpts.axios;
 
-            // execute interceptors
-            mergedOpts.axios = options.interceptors?.request
-                ? await options.interceptors.request(mergedOpts.axios ?? {})
-                : mergedOpts.axios;
-
-            // fire the request with proper error handling
-            const [data, error] = await awaitPromise(
-                axios<Body>({
-                    url: url + relativeUrl,
-                    method: type,
-                    body: body as any,
-                    ...mergedOpts.axios,
-                })
-            );
-            // if error fire the onError callback
-            if (error) {
-                setLoading(false);
-                setError(data);
-                onError(data);
-                return;
-            }
-
+        // fire the request with proper error handling
+        const [data, error] = await awaitPromise(
+            axios<Body>({
+                url: url + relativeUrl,
+                method: type,
+                body: body as any,
+                ...mergedOpts.axios,
+            })
+        );
+        // if error fire the onError callback
+        if (error) {
             setLoading(false);
-            setData(data.data);
-            setError(null);
-            onSuccess(data.data);
-            return data.data;
-        },
-        [defaults, options, url],
-        isEqual
-    );
+            setError(data);
+            onError(data);
+            return;
+        }
+
+        setLoading(false);
+        setData(data.data);
+        setError(null);
+        onSuccess(data.data);
+        return data.data;
+    };
 
     // effect when to fire the request
     useDeepEffect(
