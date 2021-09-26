@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import Test from "./test";
-import { FetchProvider } from "use-redaxios-hook";
+import { FetchProvider } from "use-redaxios";
 
 ReactDOM.render(
     <FetchProvider

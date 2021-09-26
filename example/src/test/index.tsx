@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useRedaxios } from "use-redaxios-hook";
+import { useRedaxios } from "use-redaxios";
 
 export default function Test() {
     const [count, setCount] = useState(1);
