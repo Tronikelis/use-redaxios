@@ -1,11 +1,9 @@
-<p align="center">
-    <h1 align="center">useRedaxios</h1>
-</p>
+<h1 align="center">useRedaxios</h1>
 
 <div align="center">
-  <sup>
-    🚢 React hook for making http requests     
-  </sup>
+  <h3>
+    🚢 Yet another react hook for making http requests     
+  </h3>
 </div>
 
 <br />
@@ -63,7 +61,8 @@ const { data, loading, error, get } = useRedaxios<object>(
 
 // will only request when this callback has been called
 const fire = () => {
-    get("relative path");
+    // this will change the data var as well
+    const res = get("relative path");
 };
 
 return <div>data: {JSON.stringify(data)}</div>;
