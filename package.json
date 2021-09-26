@@ -1,7 +1,7 @@
 {
     "name": "use-redaxios",
     "description": "Simple & small react hook for making http request",
-    "version": "1.0.1",
+    "version": "1.0.12",
     "author": "Tronikel",
     "license": "MIT",
     "repository": "Trunkelis/use-redaxios",
