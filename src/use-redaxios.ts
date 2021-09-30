@@ -79,19 +79,19 @@ export function useRedaxios<Body>(
 
     // for manual request firing
     const get = async (url: string = "") => {
-        return await axiosRequest<null>("get", url);
+        return axiosRequest<null>("get", url);
     };
     const post = async <T>(url: string = "", data: T) => {
-        return await axiosRequest("post", url, data);
+        return axiosRequest("post", url, data);
     };
     const del = async (url: string = "") => {
-        return await axiosRequest("delete", url);
+        return axiosRequest("delete", url);
     };
     const put = async <T>(url: string = "", data: T) => {
-        return await axiosRequest("put", url, data);
+        return axiosRequest("put", url, data);
     };
     const patch = async <T>(url: string = "", data: T) => {
-        return await axiosRequest("patch", url, data);
+        return axiosRequest("patch", url, data);
     };
 
     return {
