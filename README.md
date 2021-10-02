@@ -192,3 +192,4 @@ interceptors: {
 | ----------- | ------------------------------------------------------------------------------------------------------ |
 | `onSuccess` | This function (callback) will be called with the response's body when the response has been successful |
 | `onError`   | This function (callback) will be called with the whole response when the response has failed           |
+| `axios`     | Pass in additional request options, api is very similar to the native fetch options                    |
