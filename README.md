@@ -12,6 +12,14 @@
   <pre>npm i use-redaxios</pre>
 </div>
 
+<p align="center">
+    <img src="https://img.shields.io/npm/l/use-redaxios?style=flat-square" />
+    <img src="https://img.shields.io/npm/dm/use-redaxios?style=flat-square">
+    <img src="https://img.shields.io/npm/v/use-redaxios?style=flat-square">
+    <img src="https://img.shields.io/bundlephobia/min/use-redaxios?style=flat-square">
+    <img src="https://img.shields.io/snyk/vulnerabilities/npm/use-redaxios?style=flat-square">
+    <img src="https://img.shields.io/github/stars/Trunkelis/use-redaxios?style=flat-square">
+</p>
 <br/>
 
 ## Features
