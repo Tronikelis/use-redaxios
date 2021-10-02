@@ -79,7 +79,7 @@ export function useRedaxios<Body>(
 
     // for manual request firing
     const get = async (url: string = "") => {
-        return axiosRequest<null>("get", url);
+        return axiosRequest("get", url);
     };
     const post = async <T>(url: string = "", data: T) => {
         return axiosRequest("post", url, data);
