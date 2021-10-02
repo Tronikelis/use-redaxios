@@ -25,7 +25,7 @@
 ## Features
 
 -   Typescript support
--   8kb size
+-   6kb size
 -   request interceptors
 -   Caching, soon
 
