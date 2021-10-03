@@ -32,6 +32,7 @@ export function useRedaxios<Body>(
         // merge the default options with the currently passed ones
         const mergedOpts = merge(defaults, options);
         // see if we have this url's cache already
+        // TODO use better key gen technique
         const curCache = cache.get(JSON.stringify(mergedOpts) + url + relativeUrl);
         if (curCache) {
             setData(curCache as Body);
