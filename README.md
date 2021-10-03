@@ -22,7 +22,7 @@
 </p>
 <br/>
 
-## Features
+# Features
 
 -   Simple caching 📝
 -   10kb size 🗜️
@@ -31,8 +31,10 @@
 
 <br />
 
-## Table of contents
+# Table of contents
 
+- [Features](#features)
+- [Table of contents](#table-of-contents)
 - [Simple usage](#simple-usage)
   - [Simple usage with dependencies](#simple-usage-with-dependencies)
   - [Simple usage without dependencies](#simple-usage-without-dependencies)
