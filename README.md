@@ -142,6 +142,8 @@ const {
 You can set the the default [options](#passing-options) with a context provider:
 
 ```tsx
+import { RedaxiosProvider } from "use-redaxios";
+
 ReactDOM.render(
     <RedaxiosProvider
         options={{
