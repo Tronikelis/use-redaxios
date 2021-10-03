@@ -17,7 +17,7 @@ export function useRedaxios<Body>(
     const { options: defaults } = useContext(RedaxiosContext);
 
     // data, loading, error state
-    const [data, setData] = useState<Body>((cache.get(url) ?? {}) as Body);
+    const [data, setData] = useState<Body | null>(null);
     const [loading, setLoading] = useState(!!deps);
     const [error, setError] = useState<Response<any> | null>(null);
 
@@ -75,7 +75,7 @@ export function useRedaxios<Body>(
         setError(null);
         onSuccess(data.data);
         setLoading(false);
-        
+
         return data.data;
     };
 
