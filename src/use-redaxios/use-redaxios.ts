@@ -31,7 +31,6 @@ export function useRedaxios<Body>(
         const curCache = cache.get(genKey({ url, relativeUrl, type, body, options }));
 
         if (curCache) {
-            console.log(genKey({ url, relativeUrl, type, body, options }));
             setData(curCache as Body);
             // we have the cache so don't load, but still request
             setLoading(false);
