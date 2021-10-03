@@ -24,10 +24,10 @@
 
 ## Features
 
--   Typescript support
--   6kb size
+-   Simple caching
+-   15kb size
 -   request interceptors
--   Caching, soon
+-   Typescript support
 
 <br />
 
@@ -151,7 +151,7 @@ ReactDOM.render(
                 // useful for authorization keys
                 request: async request => {
                     return await { ...request };
-                }
+                },
             },
             axios: {},
             onSuccess: () => console.log("yes"),
