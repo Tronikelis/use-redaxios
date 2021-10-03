@@ -9,6 +9,7 @@ export default function Test() {
     const {
         data = {},
         loading,
+        fetching,
         error,
         get,
     } = useRedaxios<object>(
@@ -35,6 +36,8 @@ export default function Test() {
                 data: {JSON.stringify(data)}
                 <br />
                 loading: {JSON.stringify(loading)}
+                <br />
+                fetching {JSON.stringify(fetching)}
                 <br />
                 err: {JSON.stringify(error)}
             </div>
