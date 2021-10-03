@@ -18,11 +18,11 @@ export function useRedaxios<Body>(
 
     // data, loading, error state
     // try to get the cached data when the component mounts
-    const [data, setData] = useState<Body | null>(
-        (cache.get(url + merge(defaults, options).axios?.url + "get") as Body) ?? null
+    const [data, setData] = useState<Body | undefined>(
+        (cache.get(url + merge(defaults, options).axios?.url + "get") as Body) ?? undefined
     );
     const [loading, setLoading] = useState(!!deps);
-    const [error, setError] = useState<Response<any> | null>(null);
+    const [error, setError] = useState<Response<any> | undefined>(undefined);
 
     // main request firing callback
     const axiosRequest = async <T>(type: RequestTypes, relativeUrl: string, body?: T) => {
@@ -75,7 +75,7 @@ export function useRedaxios<Body>(
             cache.set(url + relativeUrl + mergedOpts.axios?.url + type, data.data);
             setData(data.data);
         }
-        setError(null);
+        setError(undefined);
         onSuccess(data.data);
         setLoading(false);
 
