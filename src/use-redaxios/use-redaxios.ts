@@ -41,10 +41,10 @@ export function useRedaxios<Body>(
 
         // helper methods
         const onSuccess = (res: Body) => {
-            mergedOpts.onSuccess && mergedOpts.onSuccess(res);
+            mergedOpts.onSuccess && mergedOpts.onSuccess({ ...res });
         };
         const onError = (res: Response<any>) => {
-            mergedOpts.onError && mergedOpts.onError(res);
+            mergedOpts.onError && mergedOpts.onError({ ...res });
         };
 
         // execute interceptors
