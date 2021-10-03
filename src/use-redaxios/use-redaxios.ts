@@ -19,7 +19,7 @@ export function useRedaxios<Body>(
     // data, loading, error state
     // try to get the cached data when the component mounts
     const [data, setData] = useState<Body | undefined>(
-        (cache.get(url + merge(defaults, options).axios?.url + "get") as Body) ?? undefined
+        (cache.get(JSON.stringify(merge(defaults, options)) + "get") as Body) ?? undefined
     );
     const [loading, setLoading] = useState(!!deps);
     const [error, setError] = useState<Response<any> | undefined>(undefined);
@@ -32,7 +32,7 @@ export function useRedaxios<Body>(
         // merge the default options with the currently passed ones
         const mergedOpts = merge(defaults, options);
         // see if we have this url's cache already
-        const curCache = cache.get(url + relativeUrl + mergedOpts.axios?.url + type);
+        const curCache = cache.get(JSON.stringify(mergedOpts) + url + relativeUrl);
         if (curCache) {
             setData(curCache as Body);
             // we have the cache so don't load, but still request
@@ -72,7 +72,7 @@ export function useRedaxios<Body>(
         // don't re-render the data if we have the cache already
         if (!isEqual(data.data, curCache)) {
             // add to cache
-            cache.set(url + relativeUrl + mergedOpts.axios?.url + type, data.data);
+            cache.set(JSON.stringify(mergedOpts) + url + relativeUrl, data.data);
             setData(data.data);
         }
         setError(undefined);
