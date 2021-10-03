@@ -23,8 +23,8 @@ interface useRedaxiosFnReturns<T> {
     patch: BodyMethod;
 
     loading: boolean;
-    data: T | undefined;
-    error: Response<any>;
+    data: T | null;
+    error: Response<any> | null;
 }
 
 type RequestTypes = "post" | "get" | "delete" | "put" | "patch";

@@ -4,8 +4,9 @@ import { merge } from "merge-anything";
 import { dequal as isEqual } from "dequal";
 import { useCustomCompareEffect as useDeepEffect } from "use-custom-compare";
 
-import { useRedaxiosOptions, useRedaxiosFnReturns, RequestTypes } from "./typings";
+import { useRedaxiosOptions, useRedaxiosFnReturns, RequestTypes } from "../typings";
 import { RedaxiosContext } from "./provider";
+import { cache } from "../cache";
 
 export function useRedaxios<Body>(
     url: string,
@@ -16,14 +17,27 @@ export function useRedaxios<Body>(
     const { options: defaults } = useContext(RedaxiosContext);
 
     // data, loading, error state
-    const [data, setData] = useState<Body>({} as Body);
+    // try to get the cached data when the component mounts
+    const [data, setData] = useState<Body | null>(
+        (cache.get(url + merge(defaults, options).axios?.url + "get") as Body) ?? null
+    );
     const [loading, setLoading] = useState(!!deps);
     const [error, setError] = useState<Response<any> | null>(null);
 
     // main request firing callback
     const axiosRequest = async <T>(type: RequestTypes, relativeUrl: string, body?: T) => {
+        // start loading
+        setLoading(true);
+
         // merge the default options with the currently passed ones
         const mergedOpts = merge(defaults, options);
+        // see if we have this url's cache already
+        const curCache = cache.get(url + relativeUrl + mergedOpts.axios?.url + type);
+        if (curCache) {
+            setData(curCache as Body);
+            // we have the cache so don't load, but still request
+            setLoading(false);
+        }
 
         // helper methods
         const onSuccess = (res: Body) => {
@@ -32,9 +46,6 @@ export function useRedaxios<Body>(
         const onError = (res: Response<any>) => {
             mergedOpts.onError && mergedOpts.onError(res);
         };
-
-        // start loading
-        setLoading(true);
 
         // execute interceptors
         mergedOpts.axios = mergedOpts.interceptors?.request
@@ -58,10 +69,16 @@ export function useRedaxios<Body>(
             return;
         }
 
-        setData(data.data);
+        // don't re-render the data if we have the cache already
+        if (!isEqual(data.data, curCache)) {
+            // add to cache
+            cache.set(url + relativeUrl + mergedOpts.axios?.url + type, data.data);
+            setData(data.data);
+        }
         setError(null);
         onSuccess(data.data);
         setLoading(false);
+
         return data.data;
     };
 

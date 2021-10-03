@@ -1,2 +1,1 @@
-export { useRedaxios } from "./use-redaxios";
-export { RedaxiosProvider } from "./provider";
+export * from "./use-redaxios";

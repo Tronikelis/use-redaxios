@@ -1,6 +1,6 @@
 import { createContext, ReactNode } from "react";
 import axios from "redaxios";
-import { useRedaxiosOptions } from "./typings";
+import { useRedaxiosOptions } from "../typings";
 
 const defaults = {
     axios: axios.defaults,
