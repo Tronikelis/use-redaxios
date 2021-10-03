@@ -6,7 +6,7 @@ import { useCustomCompareEffect as useDeepEffect } from "use-custom-compare";
 
 import { useRedaxiosOptions, useRedaxiosFnReturns, RequestTypes } from "../typings";
 import { RedaxiosContext } from "./provider";
-import { cache, CacheKeyObject } from "../cache";
+import { cache, genKey } from "../cache";
 
 export function useRedaxios<Body>(
     url: string,
@@ -19,12 +19,8 @@ export function useRedaxios<Body>(
     // data, loading, error state
     // try to get the cached data when the component mounts
     const [data, setData] = useState<Body | undefined>(
-        (cache.get({
-            url,
-            relativeUrl: "",
-            options: { defaults, options },
-            type: "get",
-        } as CacheKeyObject) as Body) ?? undefined
+        (cache.get(genKey({ url, relativeUrl: "", type: "get", options })) as Body) ??
+            undefined
     );
     const [loading, setLoading] = useState(!!deps);
     const [error, setError] = useState<Response<any> | undefined>(undefined);
@@ -32,14 +28,10 @@ export function useRedaxios<Body>(
     // main request firing callback
     const axiosRequest = async <T>(type: RequestTypes, relativeUrl: string, body?: T) => {
         // see if we have this url's cache already
-        const curCache = cache.get({
-            url,
-            relativeUrl,
-            options: { defaults, options },
-            type,
-        } as CacheKeyObject);
+        const curCache = cache.get(genKey({ url, relativeUrl, type, body, options }));
 
         if (curCache) {
+            console.log(genKey({ url, relativeUrl, type, body, options }));
             setData(curCache as Body);
             // we have the cache so don't load, but still request
             setLoading(false);
@@ -81,15 +73,7 @@ export function useRedaxios<Body>(
         // don't re-render the data if we have the cache already
         if (!isEqual(data.data, curCache)) {
             // add to cache
-            cache.set(
-                {
-                    url,
-                    relativeUrl,
-                    options: { defaults, options },
-                    type,
-                } as CacheKeyObject,
-                data.data
-            );
+            cache.set(genKey({ url, relativeUrl, type, body, options }), data.data);
             setData(data.data);
         }
         setError(undefined);

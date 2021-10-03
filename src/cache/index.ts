@@ -1,14 +1,17 @@
 import LRU from "quick-lru";
+import stringify from "fast-json-stable-stringify";
 
-export interface CacheKeyObject {
+export const genKey = ({
+    ...args
+}: {
     url: string;
     relativeUrl: string;
-    options: {
-        defaults: any;
-        options: any;
-    };
     type: string;
-}
+    options: any;
+    body?: any;
+}) => {
+    return stringify({ ...args });
+};
 
 export const cache = new LRU({
     maxSize: 500,
