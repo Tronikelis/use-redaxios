@@ -49,6 +49,7 @@ export function useRedaxios<Body>(
         const onError = (res: Response<any>) => {
             mergedOpts.onError && mergedOpts.onError({ ...res });
         };
+        
         // interceptor helpers
         const requestInterceptor = async (options: Options) => {
             if (mergedOpts.interceptors?.request) {
