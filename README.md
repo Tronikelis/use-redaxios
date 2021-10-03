@@ -232,7 +232,7 @@ interceptors: {
 
 | Option                 | More info                                                                                                                  |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `interceptor.response` | Pass any `async` function that will be called every time the request _succeeds_, it must return the modified response body |
+| `interceptor.response` | Pass an `async` function that will be called every time the request _succeeds_, it must return the modified response body |
 
 ### Response interceptor example
 
