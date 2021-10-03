@@ -2,7 +2,7 @@ import { useRedaxios } from "use-redaxios";
 
 export function Test1() {
     const { data, loading, error, get } = useRedaxios(
-        "https://jsonplaceholder.typicode.com/posts/1"
+        "https://jsonplaceholder.typicode.com/posts/1", {}, []
     );
 
     return (

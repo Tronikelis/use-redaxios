@@ -4,7 +4,7 @@ import { useRedaxios } from "use-redaxios";
 import { Test1 } from "./diff";
 
 export default function Test() {
-    const [count, setCount] = useState(1);
+    const [count, setCount] = useState({ count: 1 });
 
     const {
         data = {},
@@ -12,7 +12,7 @@ export default function Test() {
         error,
         get,
     } = useRedaxios<object>(
-        "https://jsonplaceholder.typicode.com/posts/" + count,
+        "https://jsonplaceholder.typicode.com/posts/" + count.count,
         {
             onSuccess: () => console.log("success"),
         },
@@ -24,7 +24,7 @@ export default function Test() {
             <div>
                 <button
                     onClick={() => {
-                        setCount(x => x + 1);
+                        setCount(x => ({ count: x.count + 1 }));
                     }}
                 >
                     inc
