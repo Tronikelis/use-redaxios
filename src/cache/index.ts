@@ -9,6 +9,7 @@ export const genKey = ({
     type: string;
     options: any;
     body?: any;
+    deps?: any[];
 }) => {
     return stringify({ ...args });
 };
