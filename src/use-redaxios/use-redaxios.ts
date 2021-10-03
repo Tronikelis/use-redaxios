@@ -44,22 +44,22 @@ export function useRedaxios<Body>(
 
         // helper methods
         const onSuccess = (res: Body) => {
-            mergedOpts.onSuccess && mergedOpts.onSuccess({ ...res });
+            mergedOpts.onSuccess && mergedOpts.onSuccess(res);
         };
         const onError = (res: Response<any>) => {
-            mergedOpts.onError && mergedOpts.onError({ ...res });
+            mergedOpts.onError && mergedOpts.onError(res);
         };
         
         // interceptor helpers
-        const requestInterceptor = async (options: Options) => {
+        const requestInterceptor = (options: Options) => {
             if (mergedOpts.interceptors?.request) {
-                return mergedOpts.interceptors.request({ ...options });
+                return mergedOpts.interceptors.request(options);
             }
             return options;
         };
-        const responseInterceptor = async (data: Body) => {
+        const responseInterceptor = (data: Body) => {
             if (mergedOpts.interceptors?.response) {
-                return mergedOpts.interceptors.response({ ...data });
+                return mergedOpts.interceptors.response(data);
             }
             return data;
         };
