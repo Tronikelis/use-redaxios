@@ -24,9 +24,9 @@
 
 ## Features
 
--   Simple caching
--   15kb size
--   request interceptors
+-   Simple caching 📝
+-   10kb size 🗜️
+-   request interceptors 🔑
 -   Typescript support
 
 <br />
