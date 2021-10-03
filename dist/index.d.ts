@@ -5,6 +5,7 @@ import { ReactNode } from 'react';
 interface useRedaxiosOptions<Body> {
     interceptors?: {
         request?: (request: Options) => Promise<Options>;
+        response?: (body: Body) => Promise<any>;
     };
     onSuccess?: (res: Body) => void;
     onError?: (error: Response<any>) => void;
@@ -22,7 +23,9 @@ interface useRedaxiosFnReturns<T> {
     put: BodyMethod;
     patch: BodyMethod;
 
+    fetching: boolean;
     loading: boolean;
+
     data: T | undefined;
     error: Response<any> | undefined;
 }

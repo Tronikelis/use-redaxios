@@ -42,7 +42,8 @@
 - [Documentation](#documentation)
   - [Return objects](#return-objects)
   - [Passing options](#passing-options)
-    - [Interceptor example](#interceptor-example)
+    - [Request interceptor example](#request-interceptor-example)
+    - [Response interceptor example](#response-interceptor-example)
 
 <br />
 
@@ -173,19 +174,21 @@ Note: these default options will be overwritten using a deep merge when you pass
 ## Return objects
 
 ```tsx
-const { data, loading, error, get, del, patch, post, put } = useRedaxios<object>("url");
+const { data, loading, fetching, error, get, del, patch, post, put } =
+    useRedaxios<object>("url");
 ```
 
-| Object    | Type                                                                   | Returns                                                                                                                                                                |
-| --------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data`    | `unknown` or a generic type that is passed into the `useRedaxios` hook | Returns the response body                                                                                                                                              |
-| `loading` | `boolean`                                                              | Returns a boolean which will be true if the request is currently pending, and vice versa                                                                               |
-| `error`   | `Response`                                                             | Returns the whole failed response                                                                                                                                      |
-| `get`     | `BodylessMethod`                                                       | Returns a function that will manually GET request the supplied url, you can pass another url to it that will get added on top of the supplied one                      |
-| `del`     | `BodylessMethod`                                                       | Returns a function that will manually DELETE request the supplied url, you can pass another url to it that will get added on top of the supplied one                   |
-| `patch`   | `BodyMethod`                                                           | Returns a function that will manually PATCH request the supplied url, you can pass a request body and another url to it that will get added on top of the supplied one |
-| `post`    | `BodyMethod`                                                           | Returns a function that will manually POST request the supplied url, you can pass a request body and another url to it that will get added on top of the supplied one  |
-| `put`     | `BodyMethod`                                                           | Returns a function that will manually PUT request the supplied url, you can pass a request body and another url to it that will get added on top of the supplied one   |
+| Object     | Type                                                                   | Returns                                                                                                                                                                |
+| ---------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data`     | `unknown` or a generic type that is passed into the `useRedaxios` hook | Returns the response body                                                                                                                                              |
+| `loading`  | `boolean`                                                              | Returns a boolean which will be true if the _cache is empty, request is currently pending_                                                                             |
+| `fetching` | `boolean`                                                              | Returns a boolean which will be true if the _request is currently pending, cache doesn't matter_                                                                       |
+| `error`    | `Response`                                                             | Returns the whole failed response                                                                                                                                      |
+| `get`      | `BodylessMethod`                                                       | Returns a function that will manually GET request the supplied url, you can pass another url to it that will get added on top of the supplied one                      |
+| `del`      | `BodylessMethod`                                                       | Returns a function that will manually DELETE request the supplied url, you can pass another url to it that will get added on top of the supplied one                   |
+| `patch`    | `BodyMethod`                                                           | Returns a function that will manually PATCH request the supplied url, you can pass a request body and another url to it that will get added on top of the supplied one |
+| `post`     | `BodyMethod`                                                           | Returns a function that will manually POST request the supplied url, you can pass a request body and another url to it that will get added on top of the supplied one  |
+| `put`      | `BodyMethod`                                                           | Returns a function that will manually PUT request the supplied url, you can pass a request body and another url to it that will get added on top of the supplied one   |
 
 <br />
 
@@ -194,9 +197,10 @@ const { data, loading, error, get, del, patch, post, put } = useRedaxios<object>
 Option interface currently looks like this
 
 ```ts
-interface useRedaxiosOptions<Body> {
+export interface useRedaxiosOptions<Body> {
     interceptors?: {
         request?: (request: Options) => Promise<Options>;
+        response?: (body: Body) => Promise<any>;
     };
     onSuccess?: (res: Body) => void;
     onError?: (error: Response<any>) => void;
@@ -208,7 +212,7 @@ interface useRedaxiosOptions<Body> {
 | ---------------------- | ------------------------------------------------------------------------------------------------------ |
 | `interceptors.request` | Pass an `async` function that will be called before every request, it must return the modified options |
 
-### Interceptor example
+### Request interceptor example
 
 ```ts
 interceptors: {
@@ -219,6 +223,26 @@ interceptors: {
                 ...request.headers,
                 Authorization: await "Some key",
             },
+        };
+    },
+},
+```
+
+<br />
+
+| Option                 | More info                                                                                                                  |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `interceptor.response` | Pass any `async` function that will be called every time the request _succeeds_, it must return the modified response body |
+
+### Response interceptor example
+
+```ts
+interceptors: {
+    response: async data => {
+        console.log(data);
+        return {
+            ...data,
+            foo: await bar
         };
     },
 },

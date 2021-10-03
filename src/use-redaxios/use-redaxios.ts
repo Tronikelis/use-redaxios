@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import axios, { Response } from "redaxios";
+import axios, { Response, Options } from "redaxios";
 import { merge } from "merge-anything";
 import { dequal as isEqual } from "dequal";
 import { useCustomCompareEffect as useDeepEffect } from "use-custom-compare";
@@ -23,10 +23,13 @@ export function useRedaxios<Body>(
             undefined
     );
     const [loading, setLoading] = useState(!!deps);
+    const [fetching, setFetching] = useState(!!deps);
     const [error, setError] = useState<Response<any> | undefined>(undefined);
 
     // main request firing callback
     const axiosRequest = async <T>(type: RequestTypes, relativeUrl: string, body?: T) => {
+        setFetching(true);
+
         // see if we have this url's cache already
         const curCache = cache.get(genKey({ url, relativeUrl, type, body, options, deps }));
 
@@ -46,11 +49,22 @@ export function useRedaxios<Body>(
         const onError = (res: Response<any>) => {
             mergedOpts.onError && mergedOpts.onError({ ...res });
         };
+        // interceptor helpers
+        const requestInterceptor = async (options: Options) => {
+            if (mergedOpts.interceptors?.request) {
+                return mergedOpts.interceptors.request({ ...options });
+            }
+            return options;
+        };
+        const responseInterceptor = async (data: Body) => {
+            if (mergedOpts.interceptors?.response) {
+                return mergedOpts.interceptors.response({ ...data });
+            }
+            return data;
+        };
 
-        // execute interceptors
-        mergedOpts.axios = mergedOpts.interceptors?.request
-            ? await mergedOpts.interceptors.request(mergedOpts.axios ?? {})
-            : mergedOpts.axios;
+        // execute request interceptor
+        mergedOpts.axios = await requestInterceptor(mergedOpts.axios ?? {});
 
         // fire the request with proper error handling
         const [data, error] = await awaitPromise(
@@ -65,9 +79,13 @@ export function useRedaxios<Body>(
         if (error) {
             setError(data);
             onError(data);
+            setFetching(false);
             setLoading(false);
             return;
         }
+
+        // execute response interceptor
+        data.data = (await responseInterceptor(data.data)) as Body;
 
         // don't re-render the data if we have the cache already
         if (!isEqual(data.data, curCache)) {
@@ -77,6 +95,7 @@ export function useRedaxios<Body>(
         }
         setError(undefined);
         onSuccess(data.data);
+        setFetching(false);
         setLoading(false);
 
         return data.data;
@@ -113,8 +132,9 @@ export function useRedaxios<Body>(
 
     return {
         data,
-        loading,
         error,
+        fetching,
+        loading,
         get,
         post,
         del,
