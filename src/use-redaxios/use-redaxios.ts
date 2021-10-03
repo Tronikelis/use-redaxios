@@ -19,7 +19,8 @@ export function useRedaxios<Body>(
     // data, loading, error state
     // try to get the cached data when the component mounts
     const [data, setData] = useState<Body | undefined>(
-        (cache.get(JSON.stringify(merge(defaults, options)) + "get") as Body) ?? undefined
+        (cache.get(JSON.stringify(merge(defaults, options)) + url + "get") as Body) ??
+            undefined
     );
     const [loading, setLoading] = useState(!!deps);
     const [error, setError] = useState<Response<any> | undefined>(undefined);
