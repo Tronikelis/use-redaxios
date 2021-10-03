@@ -1,7 +1,7 @@
 {
     "name": "use-redaxios",
     "description": "Simple & small react hook for making http request",
-    "version": "1.2.12",
+    "version": "1.2.2",
     "author": "Tronikel",
     "license": "MIT",
     "repository": "Trunkelis/use-redaxios",
@@ -20,11 +20,11 @@
         "react hook",
         "react http",
         "http hook",
-        "react axios"
+        "react axios",
+        "redaxios"
     ],
     "devDependencies": {
         "@rollup/plugin-typescript": "^8.2.5",
-        "@types/lru-cache": "^5.1.1",
         "@types/node": "^16.10.2",
         "@types/react": "^17.0.26",
         "@types/react-dom": "^17.0.9",
@@ -42,8 +42,8 @@
     ],
     "dependencies": {
         "dequal": "^2.0.2",
-        "lru-cache": "^6.0.0",
         "merge-anything": "^4.0.1",
+        "quick-lru": "^6.0.1",
         "redaxios": "^0.4.1",
         "use-custom-compare": "^1.2.0"
     }
