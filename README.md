@@ -38,6 +38,7 @@
   - [Simple usage without dependencies](#simple-usage-without-dependencies)
 - [Advanced usage examples](#advanced-usage-examples)
   - [POST'ing body with dependencies](#posting-body-with-dependencies)
+- [Default options with provider](#default-options-with-provider)
 - [Documentation](#documentation)
   - [Return objects](#return-objects)
   - [Passing options](#passing-options)
@@ -135,6 +136,33 @@ const {
 ```
 
 <br />
+
+# Default options with provider
+
+You can set the the default [options](#passing-options) with a context provider:
+
+```tsx
+ReactDOM.render(
+    <RedaxiosProvider
+        options={{
+            interceptors: {
+                // useful for authorization keys
+                request: async request => {
+                    return await { ...request };
+                }
+            },
+            axios: {},
+            onSuccess: () => console.log("yes"),
+            onError: () => console.log("error"),
+        }}
+    >
+        <Test />
+    </RedaxiosProvider>,
+    document.getElementById("root")
+);
+```
+
+Note: these default options will be overwritten using a deep merge when you pass the options into the hook
 
 # Documentation
 
