@@ -1,4 +1,3 @@
-/* eslint-disable import/no-anonymous-default-export */
 import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
 import externals from "rollup-plugin-node-externals";

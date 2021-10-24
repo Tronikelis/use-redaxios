@@ -115,24 +115,29 @@ export function useRedaxios<Body>(
     );
 
     // for manual request firing
-    const get = useCallback(async (url: string = "") => {
+    const get = useCallback(async (url = "") => {
         return axiosRequest("get", url);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [url]);
 
-    const post = useCallback(async <T>(url: string = "", data: T) => {
+    const post = useCallback(async <T>(url = "", data: T) => {
         return axiosRequest("post", url, data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [url]);
 
-    const del = useCallback(async (url: string = "") => {
+    const del = useCallback(async (url = "") => {
         return axiosRequest("delete", url);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [url]);
     
-    const put = useCallback(async <T>(url: string = "", data: T) => {
+    const put = useCallback(async <T>(url = "", data: T) => {
         return axiosRequest("put", url, data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [url]);
     
-    const patch = useCallback(async <T>(url: string = "", data: T) => {
+    const patch = useCallback(async <T>(url = "", data: T) => {
         return axiosRequest("patch", url, data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [url]);
 
     return {
