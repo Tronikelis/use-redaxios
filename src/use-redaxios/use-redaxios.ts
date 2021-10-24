@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import axios, { Response, Options } from "redaxios";
 import { merge } from "merge-anything";
 import { dequal as isEqual } from "dequal";
@@ -115,21 +115,25 @@ export function useRedaxios<Body>(
     );
 
     // for manual request firing
-    const get = async (url: string = "") => {
+    const get = useCallback(async (url: string = "") => {
         return axiosRequest("get", url);
-    };
-    const post = async <T>(url: string = "", data: T) => {
+    }, [axiosRequest]);
+
+    const post = useCallback(async <T>(url: string = "", data: T) => {
         return axiosRequest("post", url, data);
-    };
-    const del = async (url: string = "") => {
+    }, [axiosRequest]);
+
+    const del = useCallback(async (url: string = "") => {
         return axiosRequest("delete", url);
-    };
-    const put = async <T>(url: string = "", data: T) => {
+    }, [axiosRequest]);
+    
+    const put = useCallback(async <T>(url: string = "", data: T) => {
         return axiosRequest("put", url, data);
-    };
-    const patch = async <T>(url: string = "", data: T) => {
+    }, [axiosRequest]);
+    
+    const patch = useCallback(async <T>(url: string = "", data: T) => {
         return axiosRequest("patch", url, data);
-    };
+    }, [axiosRequest]);
 
     return {
         data,
