@@ -117,23 +117,23 @@ export function useRedaxios<Body>(
     // for manual request firing
     const get = useCallback(async (url: string = "") => {
         return axiosRequest("get", url);
-    }, [axiosRequest]);
+    }, [url]);
 
     const post = useCallback(async <T>(url: string = "", data: T) => {
         return axiosRequest("post", url, data);
-    }, [axiosRequest]);
+    }, [url]);
 
     const del = useCallback(async (url: string = "") => {
         return axiosRequest("delete", url);
-    }, [axiosRequest]);
+    }, [url]);
     
     const put = useCallback(async <T>(url: string = "", data: T) => {
         return axiosRequest("put", url, data);
-    }, [axiosRequest]);
+    }, [url]);
     
     const patch = useCallback(async <T>(url: string = "", data: T) => {
         return axiosRequest("patch", url, data);
-    }, [axiosRequest]);
+    }, [url]);
 
     return {
         data,
