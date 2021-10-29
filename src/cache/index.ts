@@ -1,4 +1,4 @@
-import LRU from "quick-lru";
+import LRU from "tiny-lru";
 import stringify from "fast-json-stable-stringify";
 
 // https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript
@@ -25,10 +25,7 @@ export const genKey = ({
     body?: any;
     deps?: any[];
 }) => {
-    return cyrb53(stringify({ ...args }));
+    return cyrb53(stringify({ ...args })).toString();
 };
 
-export const cache = new LRU({
-    maxSize: 500,
-    maxAge: 1000 * 60 * 60,
-});
+export const cache = LRU(500, 1000 * 60 * 60);

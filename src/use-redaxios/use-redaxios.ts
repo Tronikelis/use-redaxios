@@ -19,8 +19,9 @@ export function useRedaxios<Body>(
     // data, loading, error state
     // try to get the cached data when the component mounts
     const [data, setData] = useState<Body | undefined>(
-        (cache.get(genKey({ url, relativeUrl: "", type: "get", options, deps })) as Body) ??
-            undefined
+        cache.get(genKey({ url, relativeUrl: "", type: "get", options, deps })) as
+            | Body
+            | undefined
     );
     const [loading, setLoading] = useState(!!deps);
     const [fetching, setFetching] = useState(!!deps);
@@ -49,7 +50,7 @@ export function useRedaxios<Body>(
         const onError = (res: Response<any>) => {
             mergedOpts.onError && mergedOpts.onError(res);
         };
-        
+
         // interceptor helpers
         const requestInterceptor = (options: Options) => {
             if (mergedOpts.interceptors?.request) {
@@ -115,30 +116,45 @@ export function useRedaxios<Body>(
     );
 
     // for manual request firing
-    const get = useCallback(async (url = "") => {
-        return axiosRequest("get", url);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [url]);
+    const get = useCallback(
+        async (url = "") => {
+            return axiosRequest("get", url);
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [url]
+    );
 
-    const post = useCallback(async <T>(url = "", data: T) => {
-        return axiosRequest("post", url, data);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [url]);
+    const post = useCallback(
+        async <T>(url = "", data: T) => {
+            return axiosRequest("post", url, data);
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [url]
+    );
 
-    const del = useCallback(async (url = "") => {
-        return axiosRequest("delete", url);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [url]);
-    
-    const put = useCallback(async <T>(url = "", data: T) => {
-        return axiosRequest("put", url, data);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [url]);
-    
-    const patch = useCallback(async <T>(url = "", data: T) => {
-        return axiosRequest("patch", url, data);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [url]);
+    const del = useCallback(
+        async (url = "") => {
+            return axiosRequest("delete", url);
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [url]
+    );
+
+    const put = useCallback(
+        async <T>(url = "", data: T) => {
+            return axiosRequest("put", url, data);
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [url]
+    );
+
+    const patch = useCallback(
+        async <T>(url = "", data: T) => {
+            return axiosRequest("patch", url, data);
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [url]
+    );
 
     return {
         data,
