@@ -1,8 +1,8 @@
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useState, useEffect } from "react";
 import axios, { Response, Options } from "redaxios";
 import { merge } from "merge-anything";
 import { dequal as isEqual } from "dequal";
-import { useCustomCompareEffect as useDeepEffect } from "use-custom-compare";
+import stringify from "fast-json-stable-stringify";
 
 import { useRedaxiosOptions, useRedaxiosFnReturns, RequestTypes } from "../typings";
 import { RedaxiosContext } from "./provider";
@@ -104,15 +104,14 @@ export function useRedaxios<Body>(
     };
 
     // effect when to fire the request
-    useDeepEffect(
+    useEffect(
         () => {
             if (Array.isArray(deps)) {
                 axiosRequest<null>("get", "");
             }
-            // eslint-disable-next-line react-hooks/exhaustive-deps
         },
-        [...(deps ?? [])],
-        isEqual
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [stringify(deps)]
     );
 
     // for manual request firing
