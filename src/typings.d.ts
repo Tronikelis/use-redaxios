@@ -46,3 +46,5 @@ export function RedaxiosProvider({
     options: useRedaxiosOptions<unknown>;
     children: ReactNode;
 }): JSX.Element;
+
+export default useRedaxios;

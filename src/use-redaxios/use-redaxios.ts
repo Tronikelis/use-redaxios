@@ -1,9 +1,9 @@
 import { useCallback, useContext, useState, useEffect } from "react";
 import axios, { Response, Options } from "redaxios";
 import { merge } from "merge-anything";
-import { dequal as isEqual } from "dequal";
 import stringify from "fast-json-stable-stringify";
 
+import { isEqual } from "../utils";
 import { useRedaxiosOptions, useRedaxiosFnReturns, RequestTypes } from "../typings";
 import { RedaxiosContext } from "./provider";
 import { cache, genKey } from "../cache";

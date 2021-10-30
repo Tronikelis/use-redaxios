@@ -1,4 +1,4 @@
-import { useRedaxios } from "use-redaxios";
+import useRedaxios from "use-redaxios";
 
 export function Test1() {
     const { data, loading, error, get, fetching } = useRedaxios(

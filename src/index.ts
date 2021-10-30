@@ -1,1 +1,1 @@
-export * from "./use-redaxios";
+export { default, RedaxiosProvider, useRedaxios } from "./use-redaxios";

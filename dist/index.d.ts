@@ -46,4 +46,4 @@ declare function RedaxiosProvider({
     children: ReactNode;
 }): JSX.Element;
 
-export { RedaxiosProvider, RequestTypes, useRedaxios, useRedaxiosFnReturns, useRedaxiosOptions };
+export { RedaxiosProvider, RequestTypes, useRedaxios as default, useRedaxios, useRedaxiosFnReturns, useRedaxiosOptions };

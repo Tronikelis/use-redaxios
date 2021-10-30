@@ -1,2 +1,2 @@
 export { RedaxiosProvider } from "./provider";
-export { useRedaxios } from "./use-redaxios";
+export { useRedaxios, useRedaxios as default } from "./use-redaxios";
