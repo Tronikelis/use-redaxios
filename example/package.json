@@ -16,8 +16,8 @@
         "react": "file:../node_modules/react",
         "react-dom": "file:../node_modules/react-dom",
         "react-scripts": "file:../node_modules/react-scripts",
-        "typescript": "file:../node_modules/typescript",
-        "use-redaxios": "file:.."
+        "use-redaxios": "file:..",
+        "typescript": "file:../node_modules/typescript"
     },
     "browserslist": {
         "production": [

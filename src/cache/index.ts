@@ -24,8 +24,6 @@ export const genKey = ({
     options: any;
     body?: any;
     deps?: any[];
-}) => {
-    return cyrb53(stringify({ ...args })).toString();
-};
+}) => cyrb53(stringify({ ...args })).toString();
 
 export const cache = LRU(500, 1000 * 60 * 60);
